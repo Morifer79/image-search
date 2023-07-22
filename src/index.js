@@ -58,7 +58,7 @@ function handleSearchForm(e) {
 				lightbox.refresh();
 				const cardHeight = gallery.firstElementChild.getBoundingClientRect().height;
 				window.scrollBy({top: cardHeight * 2, behavior: 'smooth'});
-
+				gallery.textContent = '';
 				if (gallery.children.length < data.totalHits) {
 					observer.observe(guard);
 				}
