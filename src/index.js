@@ -9,6 +9,8 @@ searchForm.addEventListener('submit', handleSearchForm);
 const gallery = document.querySelector('.gallery');
 const guard = document.querySelector('.js-guard');
 
+const lightbox = new SimpleLightbox('.gallery a');
+
 let query = '';
 let page = 1;
 const perPage = 40;
@@ -28,6 +30,7 @@ function handlerPagination(entries, observer) {
 			fetchPic(query, page, perPage)
 				.then(({data}) => {
 					markupGallery(data.hits);
+					lightbox.refresh();
 					if (gallery.children.length >= data.totalHits) {
 						Notify.failure("We're sorry, but you've reached the end of search results.");
 						observer.unobserve(entry.target);
@@ -55,7 +58,7 @@ function handleSearchForm(e) {
 			} else {
 				Notify.success(`Hooray! We found ${data.totalHits} images.`);
 				markupGallery(data.hits);
-				SimpleLightbox = new SimpleLightbox('.gallery a').refresh();
+				lightbox.refresh();
 				pageScroll();
 
 				if (gallery.children.length < data.totalHits) {
