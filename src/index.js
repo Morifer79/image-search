@@ -4,21 +4,18 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-const searchForm = document.querySelector('.search-form');
-searchForm.addEventListener('submit', handleSearchForm);
+const searchForm = document.querySelector('.search-form').addEventListener('submit', handleSearchForm);
 const gallery = document.querySelector('.gallery');
 const guard = document.querySelector('.js-guard');
-
 const lightbox = new SimpleLightbox('.gallery a');
 
-let query = '';
 let page = 1;
 const perPage = 40;
 
 const options = {
-		root: null,
-		rootMargin: '300px',
-		threshold: 0,
+	root: null,
+	rootMargin: '300px',
+	threshold: 0,
 }
 
 const observer = new IntersectionObserver(handlerPagination, options);
@@ -44,7 +41,6 @@ function handlerPagination(entries, observer) {
 function handleSearchForm(e) {
 	e.preventDefault();
 	query = e.currentTarget.searchQuery.value.trim();
-	gallery.innerHTML = '';
 
 	if (query === '') {
 		Notify.failure("The search string cannot be empty. Please specify your search query.");
@@ -59,7 +55,8 @@ function handleSearchForm(e) {
 				Notify.success(`Hooray! We found ${data.totalHits} images.`);
 				markupGallery(data.hits);
 				lightbox.refresh();
-				pageScroll();
+				const cardHeight = gallery.firstElementChild.getBoundingClientRect().height;
+				window.scrollBy({top: cardHeight * 2, behavior: 'smooth'});
 
 				if (gallery.children.length < data.totalHits) {
 					observer.observe(guard);
@@ -67,6 +64,7 @@ function handleSearchForm(e) {
 			}
 		})
 		.catch(err => console.error(err))
+		.finally(() => e.target.reset());
 }
 
 // кнопка автопрокрутки вверх
@@ -94,10 +92,3 @@ function goTop() {
 	}
 }
 goTop();
-
-// плавный скролл
-function pageScroll() {
-	const {height: cardHeight} = gallery.firstElementChild;
-	gallery.getBoundingClientRect();
-	window.scrollBy({top: cardHeight * 2, behavior: "smooth"});
-}
