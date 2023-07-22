@@ -1,10 +1,8 @@
 import { fetchPic } from "./fetch-pic";
 import { markupGallery } from "./markup-gallery";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import simplelightbox from "simplelightbox";
+import SimpleLightbox from 'simplelightbox';
 import "simplelightbox/dist/simple-lightbox.min.css";
-
-simplelightbox = new simplelightbox('.gallery a')
 
 const searchForm = document.querySelector('.search-form');
 searchForm.addEventListener('submit', handleSearchForm);
