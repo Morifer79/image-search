@@ -4,7 +4,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import simplelightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-let simplelightbox = new simplelightbox('.gallery a')
+simplelightbox = new simplelightbox('.gallery a')
 
 const searchForm = document.querySelector('.search-form');
 searchForm.addEventListener('submit', handleSearchForm);
