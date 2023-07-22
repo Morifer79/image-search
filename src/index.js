@@ -6,7 +6,8 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 let simplelightbox = new simplelightbox('.gallery a')
 
-const searchForm = document.querySelector('.search-form').addEventListener('submit', handleSearchForm)
+const searchForm = document.querySelector('.search-form');
+searchForm.addEventListener('submit', handleSearchForm);
 const gallery = document.querySelector('.gallery');
 const guard = document.querySelector('.js-guard');
 
