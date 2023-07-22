@@ -29,9 +29,12 @@ function handlerPagination(entries, observer) {
 				.then(({data}) => {
 					markupGallery(data.hits);
 					lightbox.refresh();
+					console.log(gallery.children.length);
+					console.log(data.totalHits);
 					if (gallery.children.length >= data.totalHits) {
-						Notify.failure("We're sorry, but you've reached the end of search results.");
 						observer.unobserve(entry.target);
+						Notify.failure("We're sorry, but you've reached the end of search results.");
+						page = 1;
 					}
 				})
 				.catch(err => console.error(err))
@@ -50,6 +53,7 @@ function handleSearchForm(e) {
 
 	fetchPic(query, page, perPage)
 		.then(({data}) => {
+			gallery.textContent = '';
 			if (data.totalHits === 0) {
 				Notify.failure('Sorry, there are no images matching your search query. Please try again.');
 			} else {
@@ -58,7 +62,6 @@ function handleSearchForm(e) {
 				lightbox.refresh();
 				const cardHeight = gallery.firstElementChild.getBoundingClientRect().height;
 				window.scrollBy({top: cardHeight * 2, behavior: 'smooth'});
-				gallery.textContent = '';
 				if (gallery.children.length < data.totalHits) {
 					observer.observe(guard);
 				}
@@ -88,7 +91,7 @@ trackScroll();
 
 function goTop() {
 	if (window.pageYOffset > 0) {
-		window.scrollBy(0, -65);
+		window.scrollBy(0, -75);
 		setTimeout(goTop, 0);
 	}
 }
