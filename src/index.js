@@ -9,6 +9,7 @@ const gallery = document.querySelector('.gallery');
 const guard = document.querySelector('.js-guard');
 const lightbox = new SimpleLightbox('.gallery a');
 
+let query;
 let page = 1;
 const perPage = 40;
 
